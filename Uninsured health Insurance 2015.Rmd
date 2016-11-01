@@ -113,13 +113,7 @@ gsub('(.*)', '\\L\\1', state.name, perl = TRUE)
 
 
 
-all_states <- map_data("state")
-all_states
-head(all_states)
-abc$region <- abc$State
-Total <- merge(all_states, abc, by="region")
-head(Total)
-Total <- Total[Total$region!="district of columbia",]
+
 
 
 
