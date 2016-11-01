@@ -1,0 +1,98 @@
+---
+title: "Non-Insured"
+author: "Zahra N."
+date: "10/28/2016"
+output: html_document
+---
+i imported the xls to xlsx by google sheet. 
+```{r}
+Path <- "~/Documents/R Programming/Census"
+setwd(Path)
+getwd()
+install.packages("openxlsx")
+library(openxlsx)
+abc<-read.xlsx("spreadsheet.xlsx")
+```
+get ride of two first rows:
+```{r}
+abc<- abc[-c(1,2),]
+```
+there are couple of columns that i want to get ride of too
+```{r}
+abc <-abc[,-c(9:12)]
+```
+and how to remove those "................"  infront of each state? 
+after several time try dot dot dot... i realized the "."" that is used in this table part of them is different from regualr dot.
+So I had to copy it from the table by view(abc) and replace it with "". 
+```{r}
+abc$State <- gsub("…","", abc$State, fixed = TRUE)
+abc$State <- gsub(".","", abc$State, fixed = TRUE)
+head(abc, 5)
+str(abc$State)
+abc$State
+```
+removing +Y into Y
+```{r}
+abc$`Medicaid.Expansion.State?.Yes.(Y).or.No.(N)1` <-gsub("\\+","",abc$`Medicaid.Expansion.State?.Yes.(Y).or.No.(N)1`)
+```
+str(abc)
+charachter to numertic
+```{r}
+abc$`2013.Uninsured` <- as.numeric(abc$`2013.Uninsured`)
+abc$`2014.Uninsured` <- as.numeric(abc$`2014.Uninsured`)
+abc$`2015.Uninsured` <- as.numeric(abc$`2015.Uninsured`)
+abc$X4 <- as.numeric(abc$X4)
+str(abc)
+```
+
+Pie Chart
+```{r}
+pie(abc$`2013.Uninsured`, labels=abc$State) 
+
+```
+
+
+![pie Chart] (~/Users/zahra/Documents/R Programming/Census/Pie Chart.png)
+
+```
+![pie Chart] (~/Users/zahra/Documents/R Programming/Census/Pie Chart.png)
+
+Creating map
+```{r}
+install.packages("maps")
+library(maps)
+install.packages(ggplot2)
+library(ggplot2)
+install.packages("data.table")
+library(data.table)
+```
+
+all_states <- abc$State
+setkey(all_states, region)
+uninsured <- abc$'2013.Uninsured'
+setkey(uninsured,stateName)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+hi!
