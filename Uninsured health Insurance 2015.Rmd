@@ -85,18 +85,7 @@ map_data("state")
 state_map <- map_data('state')
 head(state_map)
 
-head(abc)
-all_states <- data.table(map_data('State'))
-head(all_states)
-abc$region <- abc$State
 
-setkey(all_states,region)
-abc <- data.table(Prison)
-setkey(Prison,stateName)
-
-
-tolower(abc$State)
-gsub('(.*)', '\\L\\1', state.name, perl = TRUE)
 
 
 
