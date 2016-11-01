@@ -1,0 +1,170 @@
+---
+title: "Non-Insured"
+author: "Zahra N."
+date: "10/28/2016"
+output: html_document
+---
+i imported the xls to xlsx by google sheet. 
+```{r}
+Path <- "~/Documents/R Programming/Census"
+setwd(Path)
+getwd()
+install.packages("openxlsx")
+library(openxlsx)
+abc<-read.xlsx("spreadsheet.xlsx")
+```
+get ride of two first rows:
+```{r}
+abc<- abc[-c(1,2),]
+```
+there are couple of columns that i want to get ride of too
+```{r}
+abc <-abc[,-c(9:12)]
+abc <-abc[,-c(2:6)]
+abc <-abc[,-c(3)]
+head(abc)
+```
+and how to remove those "................"  infront of each state? 
+after several time try dot dot dot... i realized the "."" that is used in this table part of them is different from regualr dot.
+So I had to copy it from the table by view(abc) and replace it with "". 
+```{r}
+abc$State <- gsub("…","", abc$State, fixed = TRUE)
+abc$State <- gsub(".","", abc$State, fixed = TRUE)
+head(abc, 5)
+str(abc$State)
+
+```
+
+charachter to numertic
+```{r}
+abc$`2015.Uninsured` <- as.numeric(abc$`2015.Uninsured`)
+str(abc)
+```
+changing the name
+```{r}
+colnames(abc) [2]<- "Uninsured"
+head(abc)
+```
+Creating the map
+```{r}
+install.packages("maps")
+library(maps)
+install.packages(ggplot2)
+library(ggplot2)
+install.packages('mapproj')
+library(mapproj)
+abc$region <- tolower(abc$State)
+head(abc,15)
+states <- map_data("state")
+map.df <- merge(states,abc, by="region", all.x=T)
+map.df <- map.df[order(map.df$order),]
+head(map.df)
+ggplot(map.df, aes(x=long,y=lat,group=group))+
+  geom_polygon(aes(fill=Uninsured))+
+  geom_path()+ 
+  scale_fill_gradientn(colours=rev(heat.colors(30)))+
+  coord_map()
+
+
+```
+
+
+
+
+
+
+
+all_states <- abc$State
+setkey(all_states, region)
+uninsured <- abc$'2013.Uninsured'
+setkey(uninsured,stateName)
+?map
+map()
+map('usa')
+map_data("state")
+state_map <- map_data('state')
+head(state_map)
+
+head(abc)
+all_states <- data.table(map_data('State'))
+head(all_states)
+abc$region <- abc$State
+
+setkey(all_states,region)
+abc <- data.table(Prison)
+setkey(Prison,stateName)
+
+
+tolower(abc$State)
+gsub('(.*)', '\\L\\1', state.name, perl = TRUE)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+all_states <- map_data("state")
+all_states
+head(all_states)
+abc$region <- abc$State
+Total <- merge(all_states, abc, by="region")
+head(Total)
+Total <- Total[Total$region!="district of columbia",]
+
+
+
+p <- ggplot()
+p <- p + geom_polygon(data=Total, aes(x=long, y=lat, group = group, fill=Total$bwRatio),colour="white"
+      ) + scale_fill_continuous(low = "thistle2", high = "darkred", guide="colorbar")
+P1 <- p + theme_bw()  + labs(fill = "2013.Uninsured " 
+                            ,title = "State Rates by uninsured, 2013", x="", y="")
+P1 + scale_y_continuous(breaks=c()) + scale_x_continuous(breaks=c()) + theme(panel.border =  element_blank())
+
+
+
+
+
+hi!
+
+
+
+
+
+abc$region <- tolower(abc$State)
+head(abc,15)
+library(ggplot2)
+library(maps)
+install.packages('mapproj')
+library(mapproj)
+states <- map_data("state")
+map.df <- merge(states,abc, by="region", all.x=T)
+map.df <- map.df[order(map.df$order),]
+head(map.df)
+ggplot(map.df, aes(x=long,y=lat,group=group))+
+  geom_polygon(aes(fill=Uninsured))+
+  geom_path()+ 
+  scale_fill_gradientn(colours=rev(heat.colors(10)),na.value="grey90")+
+  coord_map()
+
+
+
+
+
+
+
+
+
+
+
+
+
