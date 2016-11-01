@@ -67,6 +67,11 @@ install.packages("data.table")
 library(data.table)
 ```
 
+state_map <- map_data('state')
+head(state_map)
+
+
+
 all_states <- abc$State
 setkey(all_states, region)
 uninsured <- abc$'2013.Uninsured'
@@ -95,4 +100,4 @@ setkey(uninsured,stateName)
 
 
 
-hi!
+i!
