@@ -13,11 +13,11 @@ install.packages("openxlsx")
 library(openxlsx)
 abc<-read.xlsx("spreadsheet.xlsx")
 ```
-get ride of two first rows:
+deleting the two first rows:
 ```{r}
 abc<- abc[-c(1,2),]
 ```
-there are couple of columns that i want to get ride of too
+deleting a few of columns too:
 ```{r}
 abc <-abc[,-c(9:12)]
 abc <-abc[,-c(2:6)]
