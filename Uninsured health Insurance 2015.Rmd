@@ -123,38 +123,13 @@ Total <- Total[Total$region!="district of columbia",]
 
 
 
-p <- ggplot()
-p <- p + geom_polygon(data=Total, aes(x=long, y=lat, group = group, fill=Total$bwRatio),colour="white"
-      ) + scale_fill_continuous(low = "thistle2", high = "darkred", guide="colorbar")
-P1 <- p + theme_bw()  + labs(fill = "2013.Uninsured " 
-                            ,title = "State Rates by uninsured, 2013", x="", y="")
-P1 + scale_y_continuous(breaks=c()) + scale_x_continuous(breaks=c()) + theme(panel.border =  element_blank())
 
 
 
 
 
-hi!
 
 
-
-
-
-abc$region <- tolower(abc$State)
-head(abc,15)
-library(ggplot2)
-library(maps)
-install.packages('mapproj')
-library(mapproj)
-states <- map_data("state")
-map.df <- merge(states,abc, by="region", all.x=T)
-map.df <- map.df[order(map.df$order),]
-head(map.df)
-ggplot(map.df, aes(x=long,y=lat,group=group))+
-  geom_polygon(aes(fill=Uninsured))+
-  geom_path()+ 
-  scale_fill_gradientn(colours=rev(heat.colors(10)),na.value="grey90")+
-  coord_map()
 
 
 
