@@ -74,16 +74,6 @@ ggplot(map.df, aes(x=long,y=lat,group=group))+
 
 
 
-all_states <- abc$State
-setkey(all_states, region)
-uninsured <- abc$'2013.Uninsured'
-setkey(uninsured,stateName)
-?map
-map()
-map('usa')
-map_data("state")
-state_map <- map_data('state')
-head(state_map)
 
 
 
