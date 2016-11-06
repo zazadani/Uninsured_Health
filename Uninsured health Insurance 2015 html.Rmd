@@ -1,0 +1,77 @@
+---
+title: "Non-Insured"
+author: "Zahra N."
+date: "10/28/2016"
+output: html_document
+---
+```{r load packages}
+require(openxlsx)
+require(maps)
+require(ggplot2)
+require(mapproj)
+
+
+```
+
+i imported the xls to xlsx by google sheet. 
+```{r import data}
+abc<-read.xlsx("~/Documents/R Programming/Census/spreadsheet.xlsx")
+```
+get ride of two first rows:
+```{r}
+abc<- abc[-c(1,2),]
+```
+there are couple of columns that i want to get ride of too
+```{r}
+abc <-abc[,-c(9:12)]
+abc <-abc[,-c(2:6)]
+abc <-abc[,-c(3)]
+```
+and how to remove those "................"  infront of each state? 
+after several time try dot dot dot... i realized the "."" that is used in this table part of them is different from regualr dot.
+So I had to copy it from the table by view(abc) and replace it with "". 
+```{r}
+abc$State <- gsub("…","", abc$State, fixed = TRUE)
+abc$State <- gsub(".","", abc$State, fixed = TRUE)
+
+```
+
+charachter to numertic
+```{r}
+abc$`2015.Uninsured` <- as.numeric(abc$`2015.Uninsured`)
+
+```
+changing the name
+```{r}
+colnames(abc) [2]<- "Uninsured"
+```
+Creating the map
+```{r}
+abc$region <- tolower(abc$State)
+states <- map_data("state")
+map.df <- merge(states,abc, by="region", all.x=T)
+map.df <- map.df[order(map.df$order),]
+head(map.df)
+ggplot(map.df, aes(x=long,y=lat,group=group))+
+  geom_polygon(aes(fill=Uninsured))+
+  geom_path()+ 
+  scale_fill_gradientn(colours=rev(heat.colors(30)))+
+  coord_map()
+
+
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
