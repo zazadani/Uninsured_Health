@@ -4,7 +4,7 @@ author: "Zahra N."
 date: "10/28/2016"
 output: html_document
 ---
-```{r load packages}
+```{r include=FALSE load packages}
 require(openxlsx)
 require(maps)
 require(ggplot2)
@@ -14,11 +14,11 @@ require(mapproj)
 ```
 
 i imported the xls to xlsx by google sheet. 
-```{r import data}
+```{r echo=FALSE import data}
 abc<-read.xlsx("~/Documents/R Programming/Census/spreadsheet.xlsx")
 ```
 get ride of two first rows:
-```{r}
+```{r echo=FALSE}
 abc<- abc[-c(1,2),]
 ```
 there are couple of columns that i want to get ride of too
