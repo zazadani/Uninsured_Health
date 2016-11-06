@@ -22,7 +22,7 @@ get ride of two first rows:
 abc<- abc[-c(1,2),]
 ```
 there are couple of columns that i want to get ride of too
-```{r}
+```{r echo=FALSE}
 abc <-abc[,-c(9:12)]
 abc <-abc[,-c(2:6)]
 abc <-abc[,-c(3)]
@@ -30,23 +30,23 @@ abc <-abc[,-c(3)]
 and how to remove those "................"  infront of each state? 
 after several time try dot dot dot... i realized the "."" that is used in this table part of them is different from regualr dot.
 So I had to copy it from the table by view(abc) and replace it with "". 
-```{r}
+```{r echo=FALSE}
 abc$State <- gsub("…","", abc$State, fixed = TRUE)
 abc$State <- gsub(".","", abc$State, fixed = TRUE)
 
 ```
 
 charachter to numertic
-```{r}
+```{r echo=FALSE}
 abc$`2015.Uninsured` <- as.numeric(abc$`2015.Uninsured`)
 
 ```
 changing the name
-```{r}
+```{r echo=FALSE}
 colnames(abc) [2]<- "Uninsured"
 ```
 Creating the map
-```{r}
+```{r echo=FALSE}
 abc$region <- tolower(abc$State)
 states <- map_data("state")
 map.df <- merge(states,abc, by="region", all.x=T)
